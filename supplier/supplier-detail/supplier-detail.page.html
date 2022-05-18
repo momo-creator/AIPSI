@@ -1,0 +1,205 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" text="" defaultHref="tabs/tab5/supplier"></ion-back-button>
+    <ion-title>供应商详情</ion-title>
+<<<<<<< HEAD:src/app/tab5/supplier/supplier-details/details.page.html
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tab5/supplier"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()" *ngIf="update">
+        <ion-icon name="close-outline"></ion-icon>
+        取消
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" (click)="edit()">
+      <!-- [queryParams]="{supplierName: this.supplierName, accountId: this.accountId, legalPerson: this.legalPerson, phoneNumber: this.phoneNumber, mobileNumber: this.mobileNumber, address: this.Address, overdraftAmount: this.overdraftAmount, bocAccount: this.bocAccount, abcAccount: this.abcAccount, icbcAccount: this.icbcAccount, ccbAccount: this.ccbAccount, bocomAccount: this.bocomAccount, cmbAccount: this.cmbAccount, otherAccount: this.otherAccount}" -->
+      <ion-button *ngIf="!update">
+=======
+    <ion-buttons slot="primary" routerLink="./supplier-edit"
+      [queryParams]="{supplierName: this.supplierName, accountId: this.accountId, legalPerson: this.legalPerson, phoneNumber: this.phoneNumber, mobileNumber: this.mobileNumber, address: this.address, overdraftAmount: this.overdraftAmount, bocAccount: this.bocAccount, abcAccount: this.abcAccount, icbcAccount: this.icbcAccount, ccbAccount: this.ccbAccount, bocomAccount: this.bocomAccount, cmbAccount: this.cmbAccount, otherAccount: this.otherAccount}">
+      <ion-button>
+>>>>>>> 69295260089ad1860cdb7e6b4ebe51587747dc51:src/app/tab5/supplier/supplier-detail/supplier-detail.page.html
+        <ion-icon name="pencil-outline"></ion-icon>
+        编辑
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onSubmit()" [disabled]="!form.valid" *ngIf="update">
+        <ion-icon name="save-outline"></ion-icon>
+        保存
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label class="md_1" position="floating">账户<img src="assets/images/xinghao.png" height="7px" width="7px">
+        </ion-label>
+
+        <ion-input readonly="true" type="number" #accountid="ngModel" class="input1" id="accountid" name="accountid"
+          placeholder="请输入账户" [(ngModel)]="accountId" required></ion-input>
+      </ion-item>
+      <div *ngIf="accountid.invalid && accountid.dirty" class="invalid-tip">
+        <div *ngIf="accountid.errors.required" pristine>
+          <ion-icon name="alert-circle-outline"></ion-icon>账户是必填项
+        </div>
+      </div>
+      <ion-item>
+        <ion-label class="md_1" position="floating">名称<img src="assets/images/xinghao.png" height="7px" width="7px">
+        </ion-label>
+        <ion-input readonly="true" type="text" #suppliername="ngModel" class="input1" id="suppliername"
+          name="suppliername" placeholder="请输入名称(必填)" [(ngModel)]="supplierName" required>
+        </ion-input>
+      </ion-item>
+      <div *ngIf="suppliername.invalid && (suppliername.dirty || suppliername.touched)" class="invalid-tip">
+        <div *ngIf="suppliername.errors.required" pristine>
+          <ion-icon name="alert-circle-outline"></ion-icon>名称是必填项
+        </div>
+      </div>
+      <ion-item>
+        <ion-label class="md_1" position="floating">透支金额<img src="assets/images/xinghao.png" height="7px" width="7px">
+        </ion-label>
+        <ion-input readonly="true" type="number" id="overdraftamount" name="overdraftamount" #overdraftamount="ngModel"
+          class="input1" placeholder="请输入透支金额,可以为0" [(ngModel)]="overdraftAmount" required></ion-input>
+      </ion-item>
+      <div *ngIf="overdraftamount.invalid && (overdraftamount.dirty || overdraftamount.touched)" class="invalid-tip">
+        <div *ngIf="overdraftamount.errors.required" pristine>
+          <ion-icon name="alert-circle-outline"></ion-icon>透支金额是必填项
+        </div>
+      </div>
+    </ion-list>
+  </form>
+  <ion-list>
+    <ion-item>
+      <ion-label class="md_1" position="floating">法人</ion-label>
+      <ion-input readonly="true" type="text" id="legalperson" name="legalperson" class="input1" placeholder="请输入负责人姓名"
+        [(ngModel)]="legalPerson">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="md_1" position="floating">手机</ion-label>
+      <ion-input readonly="true" type="tel" maxlength='11' min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        class="input1" id="mobilenumber" name="mobilenumber" #mobilenumber="ngModel" placeholder="请输入手机号码(11位)"
+        pattern="[0-9]{11}" [(ngModel)]="mobileNumber">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="mobilenumber.invalid && (mobilenumber.dirty || mobilenumber.touched)" class="invalid-tip">
+      <div *ngIf="mobilenumber.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>手机号码只能为11位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">电话</ion-label>
+      <ion-input readonly="true" type="tel" #phonenumber="ngModel" id="phonenumber" name="phonenumber" class="input1"
+        pattern="[0-9]{11,11}" maxlength='11' min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        placeholder="请输入电话号码(11位)" [(ngModel)]="phoneNumber">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="phonenumber.invalid && (phonenumber.dirty || phonenumber.touched)" class="invalid-tip">
+      <div *ngIf="phonenumber.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>电话号码只能为11位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">地址</ion-label>
+      <ion-input readonly="true" type="text" id="address" name="address" class="input1" placeholder="请输入地址"
+        [(ngModel)]="Address">
+      </ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item>
+      <ion-label class="md_1" position="floating">中行账号</ion-label>
+      <ion-input readonly="true" type="tel" maxlength="19" min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        #bocaccount="ngModel" id="bocaccount" name="bocaccount" pattern="[0-9]{19,19}" class="input1"
+        [(ngModel)]="bocAccount">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="bocaccount.invalid && (bocaccount.dirty || bocaccount.touched)" class="invalid-tip">
+      <div *ngIf="bocaccount.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>卡号只能是19位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">农行账号</ion-label>
+      <ion-input readonly="true" type="tel" maxlength="19" min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        id="abcaccount" name="abcaccount" class="input1" #abcaccount="ngModel" pattern="[0-9]{19,19}"
+        [(ngModel)]="abcAccount">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="abcaccount.invalid && (abcaccount.dirty || abcaccount.touched)" class="invalid-tip">
+      <div *ngIf="abcaccount.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>卡号只能是19位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">工行账号</ion-label>
+      <ion-input readonly="true" type="tel" maxlength="19" min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        class="input1" #icbcaccount="ngModel" id="icbcaccount" name="icbcaccount" pattern="[0-9]{19,19}"
+        [(ngModel)]="icbcAccount">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="icbcaccount.invalid && (icbcaccount.dirty || icbcaccount.touched)" class="invalid-tip">
+      <div *ngIf="icbcaccount.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>卡号只能是19位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">建行账号</ion-label>
+      <ion-input readonly="true" type="tel" maxlength="19" min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        id="ccbaccount" name="ccbaccount" class="input1" #ccbaccount="ngModel" pattern="[0-9]{19,19}"
+        [(ngModel)]="ccbAccount">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="ccbaccount.invalid && (ccbaccount.dirty || ccbaccount.touched)" class="invalid-tip">
+      <div *ngIf="ccbaccount.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>卡号只能是19位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">交行账号</ion-label>
+      <ion-input readonly="true" type="tel" maxlength="19" min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        id="bocomaccount" name="bocomaccount" class="input1" #bocomaccount="ngModel" pattern="[0-9]{19,19}"
+        [(ngModel)]="bocomAccount">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="bocomaccount.invalid && (bocomaccount.dirty || bocomaccount.touched)" class="invalid-tip">
+      <div *ngIf="bocomaccount.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>卡号只能是19位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">招行账号</ion-label>
+      <ion-input readonly="true" type="tel" maxlength="19" min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        id="cmbaccount" name="cmbaccount" class="input1" #cmbaccount="ngModel" pattern="[0-9]{19,19}"
+        [(ngModel)]="cmbAccount">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="cmbaccount.invalid && (cmbaccount.dirty || cmbaccount.touched)" class="invalid-tip">
+      <div *ngIf="cmbaccount.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>卡号只能是19位数字
+      </div>
+    </div>
+    <ion-item>
+      <ion-label class="md_1" position="floating">其他账号</ion-label>
+      <ion-input readonly="true" type="tel" maxlength="19" min="0" onkeyup="value=value.replace(/[^0-9]/g,'')"
+        id="otheraccount" name="otheraccount" class="input1" #otheraccount="ngModel" pattern="[0-9]{19,19}"
+        [(ngModel)]="otherAccount">
+      </ion-input>
+    </ion-item>
+    <div *ngIf="otheraccount.invalid && (otheraccount.dirty || otheraccount.touched)" class="invalid-tip">
+      <div *ngIf="otheraccount.errors.pattern" pristine>
+        <ion-icon name="alert-circle-outline"></ion-icon>卡号只能是19位数字
+      </div>
+    </div>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" text="" defaultHref="tabs/tab5"></ion-back-button>
+    <ion-title>供应商管理</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="./add-supplier">
+        <ion-icon name="add-outline"></ion-icon>
+        新增
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar class="searchbar" placeholder="供应商/负责人/手机号" (ionClear)="cancel($event)" (ionBlur)="cancel($event)"
+      (ionChange)="getItems($event)">
+    </ion-searchbar>
+    <ion-button class="searchbutton" slot="end" fill="clear" (click)="search()">
+      搜索
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item lines="full">
+      <ion-label>透支金额</ion-label>
+      <ion-select value="十万" okText="确定" cancelText="取消">
+        <ion-select-option value="一千">一千</ion-select-option>
+        <ion-select-option value="五千">五千</ion-select-option>
+        <ion-select-option value="一万">一万</ion-select-option>
+        <ion-select-option value="五万">五万</ion-select-option>
+        <ion-select-option value="十万">十万</ion-select-option>
+        <ion-select-option value="二十万">二十万</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="加载中..." refreshingSpinner="circles"
+        refreshingText="加载中...">
+      </ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list-header *ngIf="!noOne">
+      <ion-label>当前没有任何供应商，您可以新增供应商</ion-label>
+    </ion-list-header>
+
+    <ion-item-sliding *ngFor="let supplier of suppliers" lines="full">
+      <ion-item routerLink="./supplier-detail"
+        [queryParams]="{supplierName: supplier.supplierName, accountId: supplier.accountId, legalPerson: supplier.legalPerson, phoneNumber: supplier.phoneNumber, mobileNumber: supplier.mobileNumber,  address: supplier.address, overdraftAmount: supplier.overdraftAmount, bocAccount: supplier.bocAccount, abcAccount: supplier.abcAccount, icbcAccount: supplier.icbcAccount, ccbAccount: supplier.ccbAccount, bocomAccount: supplier.bocomAccount, cmbAccount: supplier.cmbAccount, otherAccount: supplier.otherAccount}">
+        <ion-label>
+          <h2>供应商：{{supplier.supplierName}}</h2>
+          <h3>负责人：{{supplier.legalPerson}}</h3>
+          <h3>手机号：{{supplier.phoneNumber}}</h3>
+        </ion-label>
+        <ion-note slot="end">欠：{{supplier.overdraftAmount}}</ion-note>
+      </ion-item>
+      <ion-item-options side="end" expandable>
+        <ion-item-option (click)="presentAlertConfirm(supplier.supplierName)" color="danger">删除</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="1%" [disabled]="false" position="bottom" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer *ngIf="!hasMore">
+  <ion-toolbar>
+    <ion-label>我是有底线的，没有更多供应商了</ion-label>
+  </ion-toolbar>
+</ion-footer>
